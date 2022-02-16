@@ -1,0 +1,29 @@
+/* use border-box to force consistant behavior, makes sizing simpler */
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+/* for visualizing layout */
+body * {
+    border: 1px solid black;
+}
+
+body {
+
+    text-align: center;
+}
+
+.container {
+    border: 2px solid red;
+    background-color: aquamarine;
+    width: 50vw;
+    height: 50vh;
+    margin: 10vh auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
