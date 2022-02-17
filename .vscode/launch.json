@@ -5,6 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Chrome",
+            "request": "launch",
+            "type": "pwa-chrome",
+            "url": "http://localhost:5500",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "name": "Firefox index.html",
+            "file": "index.html"
+        },
+        {
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Chrome index.html",
