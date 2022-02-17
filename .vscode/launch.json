@@ -7,8 +7,8 @@
         {
             "type": "pwa-chrome",
             "request": "launch",
-            "name": "Chrome ${file}",
-            "file": "${file}"
+            "name": "Chrome index.html",
+            "file": "index.html"
         }
     ]
 }
