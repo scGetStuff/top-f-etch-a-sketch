@@ -41,3 +41,16 @@ div.square:hover {
     display: flex;
     justify-content: space-evenly;
 }
+
+.reset {
+    margin: 1rem;
+}
+
+.reset input {
+    width: 4rem;
+    font-size: larger;
+}
+
+.p1 {
+    padding: 8px;
+}
