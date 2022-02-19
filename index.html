@@ -16,10 +16,28 @@
     <div class="reset">
         <label for="size"></label>
         <input id="size" type="number" max="100" value="16">
-        <button class="p1">Reset</button>
+        <button>Reset</button>
     </div>
-    <div class="container"></div>
 
+    <div class="flex-row">
+        <div class="options">
+            <input type="color" id="color" name="color" value="black">
+            <label for="color">Pick a pen color</label>
+            <div>
+                <input type="radio" id="none" name="option" value="0" checked>
+                <label for="none">None</label>
+            </div>
+            <div>
+                <input type="radio" id="pen" name="option" value="1">
+                <label for="pen">Pen</label>
+            </div>
+            <div>
+                <input type="radio" id="erase" name="option" value="2">
+                <label for="erase">Erase</label>
+            </div>
+        </div>
+        <div class="container"></div>
+    </div>
 </body>
 
 </html>
