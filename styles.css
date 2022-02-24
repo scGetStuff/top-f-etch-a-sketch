@@ -39,6 +39,7 @@ h1 {
 }
 
 .reset input {
+    margin-right: 1rem;
     width: 4rem;
     font-size: larger;
 }
@@ -92,6 +93,10 @@ h1 {
     justify-content: flex-end;
     flex-wrap: nowrap;
     gap: 1rem;
+}
+
+.options input[type="radio"] {
+    height: 25px;
 }
 
 #color {

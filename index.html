@@ -16,28 +16,31 @@
 
     <div class="reset">
         <label for="size"></label>
-        <input id="size" type="number" max="100" value="16">
+        <input id="size" type="number" max="100" min="1" value="16">
         <button>Reset</button>
     </div>
 
     <div class="flex-row">
         <div class="options">
             <div>
-                <label for="color">Pick a pen color</label>
+                <label for="color">Select a color</label>
                 <input type="color" id="color" name="color" value="black">
             </div>
-
             <div>
-                <label for="none">None</label>
-                <input type="radio" id="none" name="option" value="none" checked>
+                <label for="selected">Selected</label>
+                <input type="radio" id="selected" name="option" value="1" checked>
             </div>
             <div>
-                <label for="pen">Pen</label>
-                <input type="radio" id="pen" name="option" value="pen">
+                <label for="random">Random</label>
+                <input type="radio" id="random" name="option" value="3">
+            </div>
+            <div>
+                <label for="dark">Darken</label>
+                <input type="radio" id="dark" name="option" value="4">
             </div>
             <div>
                 <label for="erase">Erase</label>
-                <input type="radio" id="erase" name="option" value="erase">
+                <input type="radio" id="erase" name="option" value="2">
             </div>
         </div>
         <div class="container"></div>

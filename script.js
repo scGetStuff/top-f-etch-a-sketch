@@ -1,19 +1,21 @@
 "use strict"
 
-const GRID = document.querySelector(".container");
-const sizeInput = document.querySelector("#size");
-const options = document.getElementsByName("option");
-const colorPicker = document.querySelector("#color");
+const grid = document.querySelector(".container");
 const resetBtn = document.querySelector(".reset button")
+const sizeInput = document.getElementById("size");
+const colorPicker = document.getElementById("color");
+const options = document.getElementsByName("option");
 
-const GRID_SIZE = 600;
-const OPTION_NONE = 'none'
-const OPTION_PEN = 'pen'
-const OPTION_ERASE = 'erase'
+const GRID_SIZE = 500;
+const OPTION_SELECTED = 1;
+const OPTION_ERASE = 2;
+const OPTION_RANDOM = 3;
+const OPTION_DARK = 4;
+
 
 // user input
 let gridSize = 1;
-let optionValue = OPTION_NONE;
+let optionValue = OPTION_SELECTED;
 let colorValue = 'black';
 
 // calculated
@@ -22,7 +24,7 @@ let squareSize = 0;
 
 options.forEach(option => {
     option.addEventListener('change', function () {
-        optionValue = this.value;
+        optionValue = Number.parseInt(this.value);
     })
 });
 
@@ -37,17 +39,21 @@ resetBtn.addEventListener('click', function () {
 
 
 function emptyGrid() {
-    while (GRID.firstChild) {
-        GRID.removeChild(GRID.firstChild);
+    while (grid.firstChild) {
+        grid.removeChild(grid.firstChild);
     }
 }
 
 function createGrid() {
-    gridSize = sizeInput.value;
+
+    gridSize = Number.parseInt(sizeInput.value);
+    if (!(Number.isInteger(gridSize) && gridSize > 0))
+        sizeInput.value = gridSize = 1;
+
     updateSquareSize();
 
     for (let row = 0; row < gridSize; row++)
-        createRow(GRID, row);
+        createRow(grid, row);
 }
 
 // modify the css in memory
@@ -93,23 +99,68 @@ function createCell(parentDiv, row, col) {
     cellDiv.classList.add('square');
     cellDiv.dataset.row = row;
     cellDiv.dataset.col = col;
-    // TODO: do something with bubbling, event deligation
+    // TODO: want to do something with event deligation
     // this is brute force, too many bindings
+    // probalbly not going to happen, will look into it in a isolated app
     cellDiv.addEventListener('mouseenter', changeCellColor);
     cellDiv.addEventListener('mousedown', changeCellColor);
     parentDiv.appendChild(cellDiv);
 }
 
-// only change if an option is selected and they hold down left mouse button
+// inline style to change the color
 function changeCellColor(e) {
-    // not concerned with strict compare for this
-    if (optionValue == OPTION_NONE || e.buttons != 1)
+
+    if (e.buttons != 1)
         return;
 
-    if (optionValue == OPTION_PEN)
-        this.style.setProperty('background-color', `${colorValue}`);
-    else if (optionValue == OPTION_ERASE)
-        this.style = '';
+    // not sure why, but could not get the background-color, setProperty() works fine
+    // the computed thing makes it work, its a string i.e. rgb(0,0,0)
+    const currentColor = window.getComputedStyle(this).getPropertyValue('background-color');
+    this.style.setProperty('background-color', `${getColor(currentColor)}`);
+}
+
+function getColor(currentColor) {
+    if (optionValue === OPTION_SELECTED)
+        return colorValue;
+    if (optionValue == OPTION_ERASE)
+        return '';
+    if (optionValue === OPTION_RANDOM)
+        return randomColor();
+    if (optionValue === OPTION_DARK)
+        return fadeToBlack(currentColor);
+}
+
+function randomPart() {
+    return Math.floor(Math.random() * 256);
+}
+
+function randomColor() {
+    return `rgb(${randomPart()}, ${randomPart()}, ${randomPart()})`;
+}
+
+function fadeToBlack(currentColor = '') {
+    // this is what i get from dom, so i'm stuck parsing a string
+    // console.log(currentColor);
+    // rgb(255, 255, 255)
+    // rgb(0, 0, 0)
+
+    const start = currentColor.indexOf('(');
+    const end = currentColor.indexOf(')');
+    const list = currentColor.substring(start + 1, end);
+    const arr = list.split(', ');
+    const darker = arr.map(s => addTenBlack(s));
+    return `rgb(${darker[0]}, ${darker[1]}, ${darker[2]})`;
+}
+
+// from the spec:
+// each pass just add another 10% of black to it so that only after 10 passes is the square completely black
+// my understanding of this is that it should be like spraypaint
+// white === 255, subtract 10% untill 0
+function addTenBlack(s) {
+    const n = Number.parseInt(s);
+    const ten = 256 * 0.1;
+    const ret = Math.round(n - ten);
+    return ret < 0 ? 0 : ret;
 }
 
 console.clear();
