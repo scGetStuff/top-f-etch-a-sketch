@@ -13,6 +13,7 @@
 <body>
 
     <h1>Etch-a-Sketch</h1>
+
     <div class="reset">
         <label for="size"></label>
         <input id="size" type="number" max="100" value="16">
@@ -21,22 +22,27 @@
 
     <div class="flex-row">
         <div class="options">
-            <input type="color" id="color" name="color" value="black">
-            <label for="color">Pick a pen color</label>
             <div>
-                <input type="radio" id="none" name="option" value="0" checked>
+                <label for="color">Pick a pen color</label>
+                <input type="color" id="color" name="color" value="black">
+            </div>
+
+            <div>
                 <label for="none">None</label>
+                <input type="radio" id="none" name="option" value="none" checked>
             </div>
             <div>
-                <input type="radio" id="pen" name="option" value="1">
                 <label for="pen">Pen</label>
+                <input type="radio" id="pen" name="option" value="pen">
             </div>
             <div>
-                <input type="radio" id="erase" name="option" value="2">
                 <label for="erase">Erase</label>
+                <input type="radio" id="erase" name="option" value="erase">
             </div>
         </div>
         <div class="container"></div>
+        <!-- TODO: hack for centering draw area in flex-row  -->
+        <div class="options"></div>
     </div>
 </body>
 

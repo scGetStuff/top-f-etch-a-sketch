@@ -7,10 +7,13 @@ const colorPicker = document.querySelector("#color");
 const resetBtn = document.querySelector(".reset button")
 
 const GRID_SIZE = 600;
+const OPTION_NONE = 'none'
+const OPTION_PEN = 'pen'
+const OPTION_ERASE = 'erase'
 
 // user input
 let gridSize = 1;
-let optionValue = 0;
+let optionValue = OPTION_NONE;
 let colorValue = 'black';
 
 // calculated
@@ -56,7 +59,6 @@ function updateSquareSize() {
     rule.style.setProperty('height', `${squareSize}px`);
 }
 
-// TODO: kind of hate this code, make it less dumb
 // cssRules in chrome broke when launching as file
 // had to set up live server to test, CORS stuff
 function getSquareRule() {
@@ -80,7 +82,7 @@ function getSquareRule() {
 function createRow(parentDiv, row) {
     const rowDiv = document.createElement('div');
     rowDiv.classList.add('row');
-    rowDiv.dataset.row = row; // create custom data attribute on the element
+    rowDiv.dataset.row = row;
     for (let col = 0; col < gridSize; col++)
         createCell(rowDiv, row, col);
     parentDiv.appendChild(rowDiv);
@@ -94,24 +96,20 @@ function createCell(parentDiv, row, col) {
     // TODO: do something with bubbling, event deligation
     // this is brute force, too many bindings
     cellDiv.addEventListener('mouseenter', changeCellColor);
+    cellDiv.addEventListener('mousedown', changeCellColor);
     parentDiv.appendChild(cellDiv);
 }
 
 // only change if an option is selected and they hold down left mouse button
-// TODO: why am i using numbers?  hard coded crap many as well be strings
-// TODO: something in the timing is screwed up, move just as you click and the
-// cursor changes to a NO symbol, circle with slash
-// breaks event code, figure it out
 function changeCellColor(e) {
-    if (optionValue == 0)
+    // not concerned with strict compare for this
+    if (optionValue == OPTION_NONE || e.buttons != 1)
         return;
 
-    if (e.buttons == 1) {
-        if (optionValue == 1)
-            this.style.setProperty('background-color', `${colorValue}`);
-        else if (optionValue == 2)
-            this.style = '';
-    }
+    if (optionValue == OPTION_PEN)
+        this.style.setProperty('background-color', `${colorValue}`);
+    else if (optionValue == OPTION_ERASE)
+        this.style = '';
 }
 
 console.clear();
