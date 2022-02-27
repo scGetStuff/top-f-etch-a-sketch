@@ -1,4 +1,4 @@
-# top-Etch-a-Sketch
+# top-etch-a-sketch
 The Odin Project, Foundations Path, JavaScript Basics "Etch-a-Sketch" project
 
 
